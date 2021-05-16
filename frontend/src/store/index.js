@@ -18,7 +18,6 @@ export default new Vuex.Store({
       state.userId = userData.userId;
     },
     createMeetup(state, payload) {
-      //@ts-ignore
       state.loadedMeetups.push(payload);
     },
     loadMeetups(state, payload) {
@@ -61,19 +60,14 @@ export default new Vuex.Store({
           if (user) {
             commit("authUser", {
               token: user,
-              //@ts-ignore
               userId: jwt.decode(user).user._id
             });
             const now = new Date().getTime();
             const exp =
-              //@ts-ignore
               jwt.decode(response.data).exp - jwt.decode(response.data).iat;
             const expirationDate = new Date(now + exp * 1000);
             localStorage.setItem("token", user);
-            //@ts-ignore
-
             localStorage.setItem("userId", jwt.decode(user).user._id);
-            //@ts-ignore
             localStorage.setItem("expirationDate", expirationDate);
 
             dispatch("setLogoutTimer", exp * 1000);
@@ -93,7 +87,6 @@ export default new Vuex.Store({
       }
       const expirationDate = localStorage.getItem("expirationDate");
       const now = new Date();
-      //@ts-ignore
       if (now >= expirationDate) {
         return;
       }
@@ -126,9 +119,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     loadedMeetups(state) {
-      //@ts-ignore
       return state.loadedMeetups.sort((meetupA, meetupB) => {
-        //@ts-ignore
         return meetupA.date > meetupB.date;
       });
     },

@@ -2,13 +2,13 @@
   <v-container>
     <v-row>
       <v-col class="d-flex justify-center mb-6 mt-4">
-        <h3 class="primary--text">Create A New Meetup</h3>
+        <h3 class="primary--text">Edit {{ this.title }}</h3>
       </v-col>
     </v-row>
     <v-card class="d-flex justify-center mb-6 mt-4">
       <v-row>
         <v-col>
-          <v-form @submit.prevent="createMeetup">
+          <v-form @submit.prevent="updateMeetup">
             <v-container>
               <v-text-field
                 v-model="title"
@@ -50,7 +50,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
                         v-model="date"
-                        label="Picker without buttons"
+                        label="Pick Date"
                         prepend-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -59,7 +59,8 @@
                     </template>
                     <v-date-picker
                       v-model="date"
-                      @input="menu2 = false"
+                      no-title
+                      scrollable
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -109,7 +110,7 @@
                   :disabled="!valid"
                   color="blue-grey lighten-2"
                   type="submit"
-                  >Create Meetup</v-btn
+                  >Update Meetup</v-btn
                 ></v-col
               >
             </v-row>
@@ -130,9 +131,9 @@ export default {
     imageUrl: "",
     description: "",
     date: new Date().toISOString().substr(0, 10),
-    menu1: false
-    // menu2: false,
-    // time: null
+    menu1: false,
+    menu2: false,
+    time: null
   }),
   computed: {
     valid() {
@@ -145,7 +146,7 @@ export default {
     }
   },
   methods: {
-    createMeetup() {
+    updateMeetup() {
       const params = {
         title: this.title,
         location: this.location,
@@ -154,15 +155,32 @@ export default {
         date: this.date
       };
       // this.$store.dispatch("createMeetup", params);
-      axios.post("http://localhost:3000/create", { params }).then((data) => {
-        console.log("create new one", data);
-        this.$router.push("/");
-      });
+      console.log("params", params);
+      axios
+        .patch("http://localhost:3000/meetups/edit/" + this.$route.query.id, {
+          params
+        })
+        .then((data) => {
+          console.log("edit data", data);
+        });
       this.title = "";
       this.location = "";
       this.imageUrl = "";
       this.description = "";
+      this.$router.push("/");
     }
+  },
+  created() {
+    if (!this.title) {
+      this.$store.dispatch("loadMeetups");
+    }
+    let meetupData = this.$store.state.loadedMeetups.find(
+      (meetup) => meetup._id === this.$route.query.id
+    );
+    this.title = meetupData.title;
+    this.location = meetupData.location;
+    this.imageUrl = meetupData.imageUrl;
+    this.description = meetupData.description;
   }
 };
 </script>

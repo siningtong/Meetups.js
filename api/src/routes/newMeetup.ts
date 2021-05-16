@@ -8,15 +8,16 @@ router.post("/", async (req, res) => {
   let meetupData = {
     title,
     imageUrl,
-    date: new Date(),
+    date,
     location,
     description
   };
-  console.log("meetupData", meetupData);
+  // console.log("meetupData", meetupData);
   const newmeetup = new Meetup(meetupData);
   const user = await User.find();
-  console.log("user", user);
+  // console.log("user", user);
   newmeetup.owner = user[0];
-  await newmeetup.save();
+  let createdNewMeetup = await newmeetup.save();
+  res.send(createdNewMeetup);
 });
 export default router;

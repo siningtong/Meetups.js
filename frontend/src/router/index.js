@@ -7,6 +7,7 @@ import Login from "../components/user/Login.vue";
 import CreateMeetups from "../components/meetups/CreateMeetups.vue";
 import Meetups from "../components/meetups/Meetups.vue";
 import Meetup from "../components/meetups/Meetup.vue";
+import EditMeetup from "../components/meetups/EditMeetup.vue";
 import store from "@/store";
 
 Vue.use(VueRouter);
@@ -43,6 +44,11 @@ const routes = [
         next("/login");
       }
     }
+  },
+  {
+    path: "/meetup/edit",
+    name: "EditMeetup",
+    component: EditMeetup
   },
   {
     path: "/meetups/:id",

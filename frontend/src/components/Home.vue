@@ -13,11 +13,11 @@
         <v-carousel style="cursor: pointer" cycle>
           <v-carousel-item
             v-for="meetup in meetups"
-            :key="meetup.id"
+            :key="meetup._id"
             :src="meetup.imageUrl"
             hide-delimiter-background
             show-arrows-on-hover
-            @click="onLoadMeetup(meetup.id)"
+            @click="onLoadMeetup(meetup._id)"
           >
             <div class="title">{{ meetup.title }}</div>
           </v-carousel-item>
@@ -37,22 +37,22 @@
 export default {
   data() {
     return {
-      model: 0,
+      model: 0
     };
   },
   computed: {
     meetups() {
       return this.$store.getters.featuredMeetups;
-    },
+    }
   },
   methods: {
     onLoadMeetup(id) {
       this.$router.push("/meetups/" + id);
-    },
+    }
   },
   created() {
     this.$store.dispatch("loadMeetups");
-  },
+  }
 };
 </script>
 
