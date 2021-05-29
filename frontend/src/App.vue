@@ -71,15 +71,14 @@ export default Vue.extend({
       return this.$store.getters.isAuthenticated;
     },
     menuItems() {
-      let menuItems = [
-        {
-          icon: "mdi-account-supervisor",
-          title: "View Meetups",
-          link: "/meetups"
-        }
-      ];
+      let menuItems = [];
       if (this.auth) {
         menuItems.push(
+          {
+            icon: "mdi-account-supervisor",
+            title: "View Meetups",
+            link: "/meetups"
+          },
           {
             icon: "mdi-head-plus-outline",
             title: "Organize Meetups",

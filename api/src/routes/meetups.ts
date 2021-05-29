@@ -10,7 +10,6 @@ router.patch("/edit/:id", async (req, res) => {
   const { title, location, imageUrl, description, date } = req.body.params;
   const id = req.params.id;
   const newMeetupData = { title, location, imageUrl, description, date };
-  console.log("req.bpdy.params", req.body.params);
 
   try {
     const meetup = await Meetup.findByIdAndUpdate(id, newMeetupData, {
@@ -27,7 +26,6 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     // const meetup = await Meetup.findById(id);
     const deleteMeetup = await Meetup.findByIdAndDelete(id);
-    console.log("deleteMeetup", deleteMeetup);
     res.status(200).send(deleteMeetup);
   } catch (error) {
     console.log("delete error", error);

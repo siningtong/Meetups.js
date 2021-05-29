@@ -26,7 +26,7 @@ export default new Vuex.Store({
     logout(state) {
       state.token = null;
       state.userId = null;
-      router.push("/login");
+      router.push("/");
     }
   },
   actions: {
@@ -35,13 +35,13 @@ export default new Vuex.Store({
         commit("logout");
       }, expiration);
     },
-    signUp(playload) {
+    signUp({ commit }, params) {
+      console.log("commit", commit);
       axios
         .post("http://localhost:3000/user/register", {
-          playload
+          params
         })
-        .then((response) => {
-          console.log("response", response);
+        .then(() => {
           router.push("/login");
         })
         .catch((error) => {
@@ -108,7 +108,6 @@ export default new Vuex.Store({
     loadMeetups({ commit }) {
       axios.get("http://localhost:3000/meetups").then((response) => {
         commit("loadMeetups", response.data);
-        console.log("meetups", response);
       });
     },
     logout({ commit }) {

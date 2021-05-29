@@ -151,9 +151,9 @@ export default {
         location: this.location,
         imageUrl: this.imageUrl,
         description: this.description,
-        date: this.date
+        date: this.date,
+        userId: this.$store.state.userId
       };
-      // this.$store.dispatch("createMeetup", params);
       axios.post("http://localhost:3000/create", { params }).then((data) => {
         console.log("create new one", data);
         this.$router.push("/");

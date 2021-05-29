@@ -10,6 +10,17 @@ const MeetupSchema = new Schema({
     type: String,
     required: true
   },
+  geometry: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  },
   date: {
     type: Date,
     required: true
@@ -22,17 +33,6 @@ const MeetupSchema = new Schema({
     type: String,
     required: true
   },
-  // geometry: {
-  //   type: {
-  //     type: String,
-  //     enum: ["Point"],
-  //     required: true
-  //   },
-  //   coordinates: {
-  //     type: [Number],
-  //     required: true
-  //   }
-  // },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User"
@@ -40,3 +40,4 @@ const MeetupSchema = new Schema({
 });
 
 export const Meetup = mongoose.model("Meetup", MeetupSchema);
+// module.exports = mongoose.model("Meetup", MeetupSchema);

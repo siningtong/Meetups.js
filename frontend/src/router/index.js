@@ -31,7 +31,14 @@ const routes = [
   {
     path: "/meetups",
     name: "Meetups",
-    component: Meetups
+    component: Meetups,
+    beforeEnter(to, from, next) {
+      if (store.state.token) {
+        next();
+      } else {
+        next("/login");
+      }
+    }
   },
   {
     path: "/create",
