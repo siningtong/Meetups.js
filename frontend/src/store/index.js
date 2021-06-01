@@ -40,7 +40,7 @@ export default new Vuex.Store({
     signUp({ commit }, params) {
       console.log("commit", commit);
       axios
-        .post("http://localhost:3000/user/register", {
+        .post("api/user/register", {
           params
         })
         .then(() => {
@@ -52,7 +52,7 @@ export default new Vuex.Store({
     },
     signIn({ commit, dispatch }, playload) {
       axios
-        .post("http://localhost:3000/user/login", {
+        .post("api/user/login", {
           userName: playload.userName,
           password: playload.password
         })
@@ -108,7 +108,7 @@ export default new Vuex.Store({
       commit("createMeetup", meetup);
     },
     loadMeetups({ commit }) {
-      axios.get("http://localhost:3000/meetups").then((response) => {
+      axios.get("api/meetups").then((response) => {
         commit("loadMeetups", response.data);
       });
     },

@@ -106,12 +106,10 @@ export default {
       this.$router.push({ path: "/meetup/edit", query: { id: this.id } });
     },
     deleteMeetup() {
-      axios
-        .delete("http://localhost:3000/meetups/delete/" + this.id)
-        .then((response) => {
-          this.$router.push("/");
-          console.log("delete response", response);
-        });
+      axios.delete("api/meetups/delete/" + this.id).then((response) => {
+        this.$router.push("/");
+        console.log("delete response", response);
+      });
     },
     isOwnThisMeetup() {
       return this.meetup.owner === this.$store.state.userId;

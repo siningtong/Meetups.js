@@ -154,7 +154,7 @@ export default {
         date: this.date,
         userId: this.$store.state.userId
       };
-      axios.post("http://localhost:3000/create", { params }).then((data) => {
+      axios.post("api/create", { params }).then((data) => {
         console.log("create new one", data);
         this.$router.push("/");
       });

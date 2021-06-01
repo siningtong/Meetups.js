@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
@@ -5,8 +8,11 @@ import routes from "./routes";
 import { User } from "./models/user";
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const mongoSanitize = require("express-mongo-sanitize");
 
-mongoose.connect("mongodb://localhost:27017/meetups", {
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/meetups";
+// "mongodb://localhost:27017/meetups"
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
@@ -33,11 +39,18 @@ app.use(
     limit: "10mb"
   })
 );
+app.use(mongoSanitize());
+
 // app.use(express.json());
 
 const port = process.env.PORT || 3000;
-app.use("/", routes);
-
+app.use("/api", routes);
+if (process.env.NODE_ENV === "production") {
+  //static folder
+  app.use(express.static(__dirname + "/public"));
+  //handle SPA
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + "public/index.html"));
+}
 app.listen(port, () => {
   console.log("Server started on port " + port + "!");
 });

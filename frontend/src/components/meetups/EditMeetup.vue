@@ -157,7 +157,7 @@ export default {
       // this.$store.dispatch("createMeetup", params);
       console.log("params", params);
       axios
-        .patch("http://localhost:3000/meetups/edit/" + this.$route.query.id, {
+        .patch("api/meetups/edit/" + this.$route.query.id, {
           params
         })
         .then((data) => {
